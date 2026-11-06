@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MAD Studio — Architecture, Interior Design &amp; Fit-Out, Landscape | Dubai</title>
+<meta name="description" content="MAD Studio is a Dubai design studio: architecture design, interior design and fit-out, and landscape design and build, from first sketch to handover.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#000000;
+    --graphite:#1C1C1B;
+    --stone:#2E2D2B;
+    --ash:#8C8A85;
+    --chalk:#ECEAE6;
+    --white:#FFFFFF;
+    --orange:#F26A1B; /* swap for the exact logo orange */
+    --wide:"wdth" 125;
+    --cond:"wdth" 75;
+    --gutter:clamp(20px,4vw,56px);
+    --max:1320px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+  body{background:var(--black);color:var(--white);font-family:"Archivo",system-ui,sans-serif;font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  img{max-width:100%;display:block}
+  :focus-visible{outline:2px solid var(--orange);outline-offset:3px}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gutter)}
+
+  /* type scale (1.333) */
+  .display{font-variation-settings:var(--wide);font-weight:300;font-size:clamp(44px,8.2vw,124px);line-height:.95;letter-spacing:-.02em}
+  h2{font-variation-settings:var(--wide);font-weight:400;font-size:clamp(30px,4.2vw,56px);line-height:1.05;letter-spacing:-.01em}
+  h3{font-variation-settings:var(--wide);font-weight:500;font-size:22px;line-height:1.2}
+  .lede{font-size:clamp(18px,1.6vw,21px);color:var(--chalk);max-width:34em}
+  .muted{color:var(--ash)}
+
+  /* buttons */
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:15px 26px;font:inherit;font-size:16px;font-weight:500;text-decoration:none;border:1px solid var(--white);background:transparent;color:var(--white);cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+  .btn:hover{background:var(--white);color:var(--black)}
+  .btn-orange{background:var(--orange);border-color:var(--orange);color:var(--black)}
+  .btn-orange:hover{background:var(--white);border-color:var(--white)}
+  .btn svg{width:18px;height:18px;flex:none}
+
+  /* header */
+  header{position:sticky;top:0;z-index:50;background:rgba(0,0,0,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--stone)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-variation-settings:var(--wide);font-weight:700;font-size:20px;letter-spacing:.02em}
+  .logo-mark{width:30px;height:30px;background:var(--orange)}
+  .nav ul{display:flex;gap:34px;list-style:none}
+  .nav ul a{text-decoration:none;font-size:15px;color:var(--chalk)}
+  .nav ul a:hover{color:var(--orange)}
+  .nav .btn{padding:10px 18px;font-size:14px}
+  .menu-btn{display:none;background:none;border:0;color:var(--white);font:inherit;font-size:15px;cursor:pointer}
+  @media (max-width:900px){
+    .nav ul{display:none}
+    .nav ul.open{display:flex;flex-direction:column;gap:0;position:absolute;top:72px;left:0;right:0;background:var(--black);border-bottom:1px solid var(--stone);padding:8px var(--gutter) 20px}
+    .nav ul.open a{display:block;padding:14px 0;font-size:18px;border-bottom:1px solid var(--stone)}
+    .menu-btn{display:block}
+    .nav .btn{display:none}
+  }
+
+  /* hero */
+  .hero{padding:clamp(56px,9vw,120px) 0 0}
+  .hero .lede{margin-top:32px}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:40px}
+  .datum{position:relative;margin-top:clamp(56px,8vw,96px);height:1px;background:var(--orange)}
+  .datum::before,.datum::after{content:"";position:absolute;top:-9px;width:1px;height:19px;background:var(--orange)}
+  .datum::before{left:0}.datum::after{right:0}
+  .datum span{position:absolute;right:0;top:-30px;font-size:13px;color:var(--orange);font-variation-settings:var(--cond)}
+  .datum b{position:absolute;left:0;top:-30px;font-weight:400;font-size:13px;color:var(--orange);font-variation-settings:var(--cond)}
+
+  /* image placeholders */
+  .ph{position:relative;background:var(--graphite);overflow:hidden}
+  .ph::after{content:attr(data-label);position:absolute;left:18px;bottom:16px;font-size:13px;color:var(--ash)}
+  .ph img{width:100%;height:100%;object-fit:cover}
+  .hero-img{aspect-ratio:21/9;margin-top:0}
+  @media (max-width:700px){.hero-img{aspect-ratio:4/3}}
+
+  section{padding:clamp(80px,10vw,140px) 0}
+  .sec-head{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:end;margin-bottom:56px}
+  @media (max-width:800px){.sec-head{grid-template-columns:1fr;gap:18px}}
+
+  /* services */
+  .services{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--stone)}
+  .service{padding:40px 36px 44px 0;border-right:1px solid var(--stone)}
+  .service+.service{padding-left:36px}
+  .service:last-child{border-right:0}
+  .service .scope{display:inline-block;margin:18px 0 20px;padding:4px 10px;font-size:13px;border:1px solid var(--orange);color:var(--orange)}
+  .service p{color:var(--chalk);font-size:16px}
+  .service ul{list-style:none;margin-top:22px}
+  .service li{padding:9px 0;border-top:1px solid var(--stone);font-size:15px;color:var(--ash)}
+  @media (max-width:900px){
+    .services{grid-template-columns:1fr}
+    .service,.service+.service{padding:36px 0;border-right:0;border-bottom:1px solid var(--stone)}
+  }
+
+  /* projects */
+  .filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px}
+  .filters button{font:inherit;font-size:15px;padding:9px 18px;background:transparent;color:var(--chalk);border:1px solid var(--stone);cursor:pointer}
+  .filters button[aria-pressed="true"]{background:var(--white);color:var(--black);border-color:var(--white)}
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:20px}
+  .project{grid-column:span 6;text-decoration:none}
+  .project.lg{grid-column:span 8}.project.sm{grid-column:span 4}
+  .project .ph{aspect-ratio:4/3}
+  .project.lg .ph{aspect-ratio:16/10}
+  .project.sm .ph{aspect-ratio:auto;height:calc(100% - 64px)}
+  .project .ph img{transition:transform .6s ease}
+  .project:hover .ph img{transform:scale(1.03)}
+  .project .meta{display:flex;justify-content:space-between;gap:16px;padding-top:14px}
+  .project h3{font-size:19px}
+  .project .meta span{font-size:14px;color:var(--ash);text-align:right}
+  .project[hidden]{display:none}
+  @media (max-width:800px){.project,.project.lg,.project.sm{grid-column:span 12}.project.sm .ph{aspect-ratio:4/3;height:auto}}
+
+  /* process — a real sequence */
+  .process{background:var(--chalk);color:var(--black)}
+  .process .lede{color:var(--stone)}
+  .steps{display:grid;grid-template-columns:repeat(5,1fr);gap:0;list-style:none;counter-reset:step;position:relative}
+  .steps::before{content:"";position:absolute;left:0;right:0;top:22px;height:1px;background:var(--black)}
+  .steps li{counter-increment:step;padding-right:24px;position:relative}
+  .steps li::before{content:counter(step);display:grid;place-items:center;width:45px;height:45px;background:var(--black);color:var(--white);font-variation-settings:var(--wide);font-weight:500;font-size:16px;position:relative}
+  .steps li:last-child::before{background:var(--orange);color:var(--black)}
+  .steps h3{margin:26px 0 10px;font-size:19px}
+  .steps p{font-size:15px;color:var(--stone)}
+  @media (max-width:900px){
+    .steps{grid-template-columns:1fr;gap:30px}
+    .steps::before{left:22px;right:auto;top:0;bottom:0;width:1px;height:auto}
+    .steps li{padding-left:72px;padding-right:0}
+    .steps li::before{position:absolute;left:0;top:0}
+    .steps h3{margin-top:8px}
+  }
+
+  /* studio */
+  .studio{display:grid;grid-template-columns:5fr 7fr;gap:clamp(32px,6vw,96px);align-items:start}
+  .studio .ph{aspect-ratio:4/5}
+  .studio p{color:var(--chalk);margin-top:22px;max-width:36em}
+  .facts{display:grid;grid-template-columns:repeat(3,1fr);margin-top:48px;border-top:1px solid var(--stone)}
+  .facts div{padding:22px 18px 0 0}
+  .facts strong{display:block;font-variation-settings:var(--wide);font-weight:400;font-size:clamp(28px,3vw,40px);color:var(--orange);line-height:1.1}
+  .facts span{font-size:14px;color:var(--ash)}
+  @media (max-width:800px){.studio{grid-template-columns:1fr}.studio .ph{aspect-ratio:4/3}}
+
+  /* contact */
+  .contact{border-top:1px solid var(--stone)}
+  .contact-grid{display:grid;grid-template-columns:5fr 7fr;gap:clamp(32px,6vw,96px)}
+  .direct{margin-top:36px;display:grid;gap:22px}
+  .direct a{text-decoration:none}
+  .direct dt{font-size:14px;color:var(--ash)}
+  .direct dd{font-size:19px;margin-top:2px}
+  .direct dd a:hover{color:var(--orange)}
+  form{display:grid;grid-template-columns:1fr 1fr;gap:18px 20px}
+  .field{display:grid;gap:8px}
+  .field.full{grid-column:1/-1}
+  label{font-size:14px;color:var(--chalk)}
+  input,select,textarea{font:inherit;font-size:16px;color:var(--white);background:var(--graphite);border:1px solid var(--stone);padding:14px 16px;border-radius:0;width:100%}
+  select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--ash) 50%),linear-gradient(135deg,var(--ash) 50%,transparent 50%);background-position:calc(100% - 22px) 50%,calc(100% - 16px) 50%;background-size:6px 6px;background-repeat:no-repeat}
+  input:focus,select:focus,textarea:focus{border-color:var(--orange);outline:none}
+  textarea{min-height:130px;resize:vertical}
+  .form-note{grid-column:1/-1;font-size:14px;color:var(--ash)}
+  .form-msg{grid-column:1/-1;font-size:15px;color:var(--orange);min-height:1.4em}
+  @media (max-width:800px){.contact-grid{grid-template-columns:1fr}form{grid-template-columns:1fr}}
+
+  /* project cards are buttons-in-links: make the whole card clickable */
+  .project{display:block;cursor:pointer;background:none;border:0;color:inherit;text-align:left;font:inherit;padding:0}
+  .project .meta .view{display:inline-block;text-align:left;margin-top:8px;font-size:14px;color:var(--orange)}
+
+  /* before / after */
+  .ba{position:relative;aspect-ratio:16/9;overflow:hidden;user-select:none}
+  .ba-img{position:absolute;inset:0}
+  .ba-before{clip-path:inset(0 calc(100% - var(--pos)) 0 0);background:var(--stone)}
+  .ba-before::after{left:18px;right:auto}
+  .ba-img:not(.ba-before)::after{left:auto;right:18px}
+  .ba-line{position:absolute;top:0;bottom:0;left:var(--pos);width:2px;margin-left:-1px;background:var(--orange);pointer-events:none}
+  .ba-line span{position:absolute;top:50%;left:50%;width:46px;height:46px;margin:-23px 0 0 -23px;border-radius:50%;background:var(--orange)}
+  .ba-line span::before,.ba-line span::after{content:"";position:absolute;top:17px;border:6px solid transparent}
+  .ba-line span::before{left:6px;border-right-color:var(--black)}
+  .ba-line span::after{right:6px;border-left-color:var(--black)}
+  .ba-range{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+  .ba-range:focus-visible + *, .ba:focus-within .ba-line{outline:2px solid var(--white)}
+  @media (max-width:700px){.ba{aspect-ratio:4/3}}
+
+  /* instagram */
+  .insta{border-top:1px solid var(--stone)}
+  .insta-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+  .insta-grid a{aspect-ratio:1;display:block;position:relative}
+  .insta-grid a::before{content:"";position:absolute;inset:0;background:rgba(242,106,27,0);transition:background .2s}
+  .insta-grid a:hover::before{background:rgba(242,106,27,.35)}
+  @media (max-width:800px){.insta-grid{grid-template-columns:repeat(3,1fr)}}
+
+  /* project modal */
+  body.locked{overflow:hidden}
+  .modal{position:fixed;inset:0;z-index:100;background:var(--black);overflow-y:auto}
+  .modal[hidden]{display:none}
+  .modal-inner{max-width:var(--max);margin:0 auto;padding:24px var(--gutter) 64px}
+  .modal-close{display:block;margin:0 0 20px auto;background:none;border:1px solid var(--stone);color:var(--white);font:inherit;font-size:15px;padding:10px 18px;cursor:pointer}
+  .modal-close:hover{border-color:var(--white)}
+  .gallery{position:relative;overflow:hidden}
+  .g-track{display:flex;transition:transform .45s ease}
+  .g-track .ph{flex:0 0 100%;aspect-ratio:16/9}
+  @media (max-width:700px){.g-track .ph{aspect-ratio:4/3}}
+  .g-nav{position:absolute;top:50%;transform:translateY(-50%);width:52px;height:52px;background:rgba(0,0,0,.6);color:var(--white);border:1px solid var(--stone);font-size:28px;line-height:1;cursor:pointer}
+  .g-nav:hover{background:var(--orange);color:var(--black);border-color:var(--orange)}
+  .g-prev{left:16px}.g-next{right:16px}
+  .g-count{position:absolute;right:16px;bottom:16px;font-size:14px;background:rgba(0,0,0,.6);padding:4px 10px}
+  .m-body{display:grid;grid-template-columns:7fr 5fr;gap:clamp(28px,5vw,80px);margin-top:44px}
+  .m-facts{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--stone)}
+  .m-facts div{padding:16px 12px 16px 0;border-bottom:1px solid var(--stone)}
+  .m-facts dt{font-size:13px;color:var(--ash)}
+  .m-facts dd{font-size:17px;margin-top:2px}
+  .m-actions{display:grid;gap:12px;margin-top:28px}
+  .m-actions .btn{justify-content:center}
+  @media (max-width:800px){.m-body{grid-template-columns:1fr}}
+
+  footer{border-top:1px solid var(--stone);padding:36px 0 48px;font-size:14px;color:var(--ash)}
+  footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px}
+  footer nav{display:flex;gap:24px}
+  footer a{text-decoration:none}
+  footer a:hover{color:var(--white)}
+
+  .wa-float{position:fixed;right:18px;bottom:18px;z-index:60;width:58px;height:58px;border-radius:50%;background:var(--orange);display:grid;place-items:center;color:var(--black);box-shadow:0 6px 24px rgba(0,0,0,.5)}
+  .wa-float svg{width:28px;height:28px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top" aria-label="MAD Studio home"><span class="logo-mark" aria-hidden="true"></span>MAD Studio</a>
+    <ul id="menu">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#process">Process</a></li>
+      <li><a href="#studio">Studio</a></li>
+      <li><a href="#instagram">Instagram</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a class="btn btn-orange" href="#contact">Book a consultation</a>
+    <button class="menu-btn" aria-expanded="false" aria-controls="menu">Menu</button>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="wrap">
+      <h1 class="display">Designed and built<br>in Dubai.</h1>
+      <p class="lede">Architecture, interiors and landscape from one studio. We take your project from the first sketch to the day you get the keys.</p>
+      <div class="hero-actions">
+        <a class="btn btn-orange wa-link" href="#">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z"/></svg>
+          Chat on WhatsApp
+        </a>
+        <a class="btn" href="#contact">Book a consultation</a>
+      </div>
+      <div class="datum" aria-hidden="true"><b>FFL ±0.00</b><span>Dubai, since 2020</span></div>
+    </div>
+    <div class="wrap" style="padding-top:0">
+      <div class="ph hero-img" data-label="Hero image — your best completed villa interior"></div>
+    </div>
+  </div>
+
+  <section id="services">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Three disciplines, one team.</h2>
+        <p class="lede">You deal with one studio for the whole project: the building, the spaces inside it and the landscape around it.</p>
+      </div>
+      <div class="services">
+        <article class="service">
+          <h3>Architecture Design</h3>
+          <span class="scope">Design</span>
+          <p>New villas, extensions and renovations, designed and drawn for authority approval.</p>
+          <ul>
+            <li>Concept and massing</li>
+            <li>Planning and authority drawings</li>
+            <li>Facade and elevation design</li>
+            <li>Developer and community NOCs</li>
+          </ul>
+        </article>
+        <article class="service">
+          <h3>Interior Design &amp; Fit-Out</h3>
+          <span class="scope">Design &amp; build</span>
+          <p>Complete interiors, designed in our studio and built by our own fit-out team.</p>
+          <ul>
+            <li>Space planning and 3D visuals</li>
+            <li>Materials, lighting and joinery</li>
+            <li>Kitchens, bathrooms and wardrobes</li>
+            <li>Full fit-out and handover</li>
+          </ul>
+        </article>
+        <article class="service">
+          <h3>Landscape Design &amp; Build</h3>
+          <span class="scope">Design &amp; build</span>
+          <p>Gardens, pools and outdoor living, designed for the Dubai climate and built to last.</p>
+          <ul>
+            <li>Garden and planting design</li>
+            <li>Pools and water features</li>
+            <li>Pergolas, decks and outdoor kitchens</li>
+            <li>Hardscape and lighting</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Selected projects</h2>
+        <p class="lede">Private villas and apartments across Dubai, with a few commercial spaces.</p>
+      </div>
+      <div class="filters" role="group" aria-label="Filter projects">
+        <button aria-pressed="true" data-filter="all">All</button>
+        <button aria-pressed="false" data-filter="villa">Villas</button>
+        <button aria-pressed="false" data-filter="apartment">Apartments</button>
+        <button aria-pressed="false" data-filter="landscape">Landscape</button>
+        <button aria-pressed="false" data-filter="commercial">Commercial</button>
+      </div>
+      <div class="grid" id="project-grid"></div>
+    </div>
+  </section>
+
+  <section id="transform" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Before and after</h2>
+        <p class="lede">Drag the line to see what a renovation changes. Same room, same walls, a different space.</p>
+      </div>
+      <div class="ba" id="ba" style="--pos:50%">
+        <div class="ba-img ph" data-label="After — finished room"></div>
+        <div class="ba-img ba-before ph" data-label="Before — existing room"></div>
+        <div class="ba-line" aria-hidden="true"><span></span></div>
+        <input class="ba-range" type="range" min="0" max="100" value="50" aria-label="Compare before and after">
+      </div>
+    </div>
+  </section>
+
+  <section id="process" class="process">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>How a project runs</h2>
+        <p class="lede">One studio from the first meeting to handover, with a fixed scope and price agreed before work starts.</p>
+      </div>
+      <ol class="steps">
+        <li><h3>Consultation</h3><p>We meet on site or at the studio, walk the space and understand how you live.</p></li>
+        <li><h3>Concept</h3><p>Layouts, mood and 3D visuals so you can see the space before anything is built.</p></li>
+        <li><h3>Design &amp; pricing</h3><p>Detailed drawings, materials and a full bill of quantities with a fixed price.</p></li>
+        <li><h3>Approvals &amp; build</h3><p>We handle the NOCs and permits, then our team builds on a clear schedule.</p></li>
+        <li><h3>Handover</h3><p>A final walkthrough, snagging closed out, and the keys back to you.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="studio">
+    <div class="wrap studio">
+      <div class="ph" data-label="Portrait — Adeel"></div>
+      <div>
+        <h2>A studio led by an architect.</h2>
+        <p>MAD Studio was founded in Dubai in 2020 by Adeel, an architect trained at the National College of Arts with more than ten years in practice. The studio works with homeowners, developers and hospitality operators who want one team to own the design and the build.</p>
+        <p>Every project is led personally, from the first site visit to the final snag list.</p>
+        <div class="facts">
+          <div><strong>2020</strong><span>Founded in Dubai</span></div>
+          <div><strong>10+</strong><span>Years of practice</span></div>
+          <div><strong>3</strong><span>Disciplines in-house</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="instagram" class="insta">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>See the work as it happens</h2>
+        <p class="lede">Site visits, material choices and finished rooms, posted every week on our Instagram.</p>
+      </div>
+      <div class="insta-grid" id="insta-grid"></div>
+      <a class="btn btn-orange ig-link" href="#" style="margin-top:32px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+        Follow @madstudio.official
+      </a>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <h2>Start your project</h2>
+        <p class="lede" style="margin-top:22px">Tell us about your project and we'll come back within one working day to arrange a consultation.</p>
+        <dl class="direct">
+          <div><dt>WhatsApp</dt><dd><a class="wa-link" href="#">+971 XX XXX XXXX</a></dd></div>
+          <div><dt>Email</dt><dd><a href="mailto:info@madstudio.design">info@madstudio.design</a></dd></div>
+          <div><dt>Studio</dt><dd>Studio address, Dubai, UAE</dd></div>
+          <div><dt>Instagram</dt><dd><a href="https://www.instagram.com/madstudio.official/">@madstudio.official</a></dd></div>
+        </dl>
+      </div>
+      <form id="enquiry" novalidate>
+        <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" autocomplete="name" required></div>
+        <div class="field"><label for="f-phone">Phone or WhatsApp</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" required></div>
+        <div class="field full"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email"></div>
+        <div class="field"><label for="f-type">Project type</label>
+          <select id="f-type" name="type"><option>Villa</option><option>Apartment</option><option>Landscape &amp; pool</option><option>Commercial</option><option>New build</option></select></div>
+        <div class="field"><label for="f-service">Service</label>
+          <select id="f-service" name="service"><option>Interior design &amp; fit-out</option><option>Architecture design</option><option>Landscape design &amp; build</option><option>More than one</option></select></div>
+        <div class="field"><label for="f-loc">Location</label><input id="f-loc" name="location" placeholder="e.g. Dubai Hills, Arabian Ranches"></div>
+        <div class="field"><label for="f-budget">Budget</label>
+          <select id="f-budget" name="budget"><option>Under AED 250,000</option><option>AED 250,000 – 500,000</option><option>AED 500,000 – 1,000,000</option><option>Above AED 1,000,000</option><option>Not sure yet</option></select></div>
+        <div class="field full"><label for="f-msg">About the project</label><textarea id="f-msg" name="message" placeholder="Size, rooms, timing, anything you already have in mind"></textarea></div>
+        <div class="field full"><button class="btn btn-orange" type="submit" style="justify-self:start">Send enquiry</button></div>
+        <p class="form-msg" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr"></span> MAD Studio, Dubai</span>
+    <nav aria-label="Footer"><a href="#services">Services</a><a href="#projects">Projects</a><a href="#contact">Contact</a><a href="https://www.instagram.com/madstudio.official/">Instagram</a></nav>
+  </div>
+</footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="m-title" hidden>
+  <div class="modal-inner">
+    <button class="modal-close" aria-label="Close project">Close</button>
+    <div class="gallery">
+      <div class="g-track" id="g-track"></div>
+      <button class="g-nav g-prev" aria-label="Previous image">‹</button>
+      <button class="g-nav g-next" aria-label="Next image">›</button>
+      <div class="g-count" id="g-count"></div>
+    </div>
+    <div class="m-body">
+      <div>
+        <h2 id="m-title"></h2>
+        <p class="lede" id="m-desc" style="margin-top:16px"></p>
+      </div>
+      <div>
+        <dl class="m-facts" id="m-facts"></dl>
+        <div class="m-actions">
+          <a class="btn btn-orange" id="m-ig" href="#">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+            See this project on Instagram
+          </a>
+          <a class="btn wa-link m-wa" href="#">Ask about a similar project</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<a class="wa-float wa-link" href="#" aria-label="Chat with MAD Studio on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.3a.5.5 0 0 0 0-.5l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7a2.8 2.8 0 0 0 1.8-1.3 2.3 2.3 0 0 0 .2-1.3c-.1-.1-.3-.2-.5-.3Z"/></svg>
+</a>
+
+<script>
+  // Settings — replace before going live
+  const WHATSAPP = "9715XXXXXXXX"; // full number, no + or spaces
+  const WA_TEXT = "Hello MAD Studio, I'd like to discuss a project.";
+
+  const INSTAGRAM = "https://www.instagram.com/madstudio.official/";
+
+  // Projects — edit this list to add or change projects.
+  // size: "lg" | "sm" | "" ; images: image file paths (leave [] for placeholders)
+  // instagram: link to the project's post or highlight (falls back to the profile)
+  const PROJECTS = [
+    { title:"Lagoon Villa", type:"villa", size:"lg", location:"DAMAC Lagoons", service:"Interior design & fit-out", year:"2026", area:"—",
+      desc:"A full interior renovation for a family villa: new layout on the ground floor, a custom kitchen and joinery throughout.", images:[], instagram:"" },
+    { title:"Downtown Residence", type:"apartment", size:"sm", location:"Downtown Dubai", service:"Interior fit-out", year:"2026", area:"—",
+      desc:"A high-floor apartment fitted out with warm materials and concealed storage to keep the views clear.", images:[], instagram:"" },
+    { title:"Park Villa Garden", type:"landscape", size:"", location:"Jumeirah Park", service:"Landscape & pool", year:"2026", area:"—",
+      desc:"A new pool, shaded seating and planting chosen for year-round Dubai heat.", images:[], instagram:"" },
+    { title:"Tower Apartment", type:"apartment", size:"", location:"Executive Towers", service:"Interior fit-out", year:"2026", area:"—",
+      desc:"A complete apartment fit-out delivered with the developer NOC and a fixed handover date.", images:[], instagram:"" },
+    { title:"Pilates Studio", type:"commercial", size:"sm", location:"Jumeirah Road", service:"Design", year:"2026", area:"—",
+      desc:"A villa converted into a calm wellness studio, with reformer rooms and a reception lounge.", images:[], instagram:"" },
+    { title:"Costa Brava Villa", type:"villa", size:"lg", location:"DAMAC Lagoons", service:"Renovation & fit-out", year:"2026", area:"—",
+      desc:"A villa renovation with new flooring, lighting, bathrooms and built-in furniture across all floors.", images:[], instagram:"" }
+  ];
+
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const slide = (src, label) => src
+    ? `<div class="ph"><img src="${esc(src)}" alt="${esc(label)}" loading="lazy"></div>`
+    : `<div class="ph" data-label="${esc(label)}"></div>`;
+
+  const grid = document.getElementById("project-grid");
+  grid.innerHTML = PROJECTS.map((p, i) => `
+    <button class="project ${p.size}" data-type="${p.type}" data-i="${i}" aria-label="Open ${esc(p.title)}">
+      ${slide(p.images[0], "Project image")}
+      <div class="meta"><div><h3>${esc(p.title)}</h3><span class="view">View project</span></div><span>${esc(p.location)}<br>${esc(p.service)}</span></div>
+    </button>`).join("");
+
+  // Instagram tiles: link to the profile (live site can show real posts)
+  document.getElementById("insta-grid").innerHTML =
+    Array.from({length:6}, (_, i) => `<a class="ph ig-link" href="#" aria-label="Open Instagram post ${i+1}" data-label=""></a>`).join("");
+  document.querySelectorAll(".ig-link").forEach(a => { a.href = INSTAGRAM; a.target = "_blank"; a.rel = "noopener"; });
+
+  // project modal with gallery
+  const modal = document.getElementById("modal"), track = document.getElementById("g-track"), count = document.getElementById("g-count");
+  let gi = 0, gn = 1, lastFocus = null;
+  function go(n){ gi = (n + gn) % gn; track.style.transform = `translateX(-${gi*100}%)`; count.textContent = `${gi+1} / ${gn}`; }
+  function openProject(i){
+    const p = PROJECTS[i]; lastFocus = document.activeElement;
+    const imgs = p.images.length ? p.images : [null, null, null, null];
+    gn = imgs.length;
+    track.innerHTML = imgs.map((src, k) => slide(src, `${p.title} — image ${k+1}`)).join("");
+    document.getElementById("m-title").textContent = p.title;
+    document.getElementById("m-desc").textContent = p.desc;
+    document.getElementById("m-facts").innerHTML = [["Location",p.location],["Service",p.service],["Year",p.year],["Area",p.area]]
+      .map(([k,v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`).join("");
+    const ig = document.getElementById("m-ig"); ig.href = p.instagram || INSTAGRAM; ig.target = "_blank"; ig.rel = "noopener";
+    modal.querySelector(".m-wa").href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(`Hello MAD Studio, I saw ${p.title} on your website and I'd like something similar.`);
+    modal.hidden = false; document.body.classList.add("locked"); go(0);
+    modal.querySelector(".modal-close").focus();
+  }
+  function closeProject(){ modal.hidden = true; document.body.classList.remove("locked"); lastFocus && lastFocus.focus(); }
+  grid.addEventListener("click", e => { const b = e.target.closest(".project"); if (b) openProject(+b.dataset.i); });
+  modal.querySelector(".modal-close").addEventListener("click", closeProject);
+  modal.querySelector(".g-prev").addEventListener("click", () => go(gi-1));
+  modal.querySelector(".g-next").addEventListener("click", () => go(gi+1));
+  document.addEventListener("keydown", e => {
+    if (modal.hidden) return;
+    if (e.key === "Escape") closeProject();
+    if (e.key === "ArrowRight") go(gi+1);
+    if (e.key === "ArrowLeft") go(gi-1);
+  });
+  let tx = null;
+  track.addEventListener("touchstart", e => tx = e.touches[0].clientX, {passive:true});
+  track.addEventListener("touchend", e => { if (tx === null) return; const d = e.changedTouches[0].clientX - tx; if (Math.abs(d) > 40) go(gi + (d < 0 ? 1 : -1)); tx = null; });
+
+  // before / after slider
+  const ba = document.getElementById("ba");
+  ba.querySelector(".ba-range").addEventListener("input", e => ba.style.setProperty("--pos", e.target.value + "%"));
+
+  document.getElementById("yr").textContent = new Date().getFullYear();
+  document.querySelectorAll(".wa-link").forEach(a => {
+    a.href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(WA_TEXT);
+  });
+
+  // mobile menu
+  const menuBtn = document.querySelector(".menu-btn"), menu = document.getElementById("menu");
+  menuBtn.addEventListener("click", () => {
+    const open = menu.classList.toggle("open");
+    menuBtn.setAttribute("aria-expanded", open);
+    menuBtn.textContent = open ? "Close" : "Menu";
+  });
+  menu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
+    menu.classList.remove("open"); menuBtn.setAttribute("aria-expanded", false); menuBtn.textContent = "Menu";
+  }));
+
+  // project filter
+  const btns = document.querySelectorAll(".filters button");
+  btns.forEach(b => b.addEventListener("click", () => {
+    btns.forEach(x => x.setAttribute("aria-pressed", x === b));
+    const f = b.dataset.filter;
+    document.querySelectorAll(".project").forEach(p => { p.hidden = !(f === "all" || p.dataset.type === f); });
+  }));
+
+  // enquiry form — preview: checks fields; live site will email info@madstudio.design
+  document.getElementById("enquiry").addEventListener("submit", e => {
+    e.preventDefault();
+    const f = e.target, msg = f.querySelector(".form-msg");
+    if (!f.name.value.trim() || !f.phone.value.trim()) {
+      msg.textContent = "Add your name and a phone number so we can reach you.";
+      (f.name.value.trim() ? f.phone : f.name).focus();
+      return;
+    }
+    msg.textContent = "Preview only: on the live site this enquiry goes straight to info@madstudio.design.";
+  });
+</script>
+</body>
+</html>
