@@ -72,6 +72,10 @@
   .hero .wrap{position:relative;z-index:1;width:100%}
   .hero .display{text-shadow:0 2px 30px rgba(0,0,0,.35)}
   .hero .lede{color:var(--white)}
+  .hero .quote{font-variation-settings:"wdth" 100;font-weight:700;font-size:clamp(40px,6.2vw,92px);line-height:1.02;letter-spacing:-.015em;max-width:12em}
+  .quote-by{display:flex;align-items:center;gap:14px;margin-top:22px;font-size:14px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--orange)}
+  .quote-by::before{content:"";width:44px;height:2px;background:var(--orange)}
+  .tagline{margin-top:26px;font-variation-settings:var(--wide);font-size:clamp(20px,2.2vw,30px);font-weight:400;color:var(--white)}
   @media (max-width:700px){.br-d{display:none}}
   .hero .lede{margin-top:32px}
   .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:40px}
@@ -259,7 +263,9 @@
   <div class="hero">
     <div class="hero-cover"><img src="cover.jpg" alt="Formal living room behind black-framed glass doors, with a coffered lit ceiling and marble feature wall" fetchpriority="high"></div>
     <div class="wrap">
-      <h1 class="display">Designed and built<br class="br-d"> in Dubai.</h1>
+      <h1 class="display quote">Originality consists of returning to the origin.</h1>
+      <p class="quote-by">Antoni Gaudí</p>
+      <p class="tagline">Designed worldwide &amp; built in Dubai.</p>
       <p class="lede">Architecture, interiors and landscape from one studio. We take your project from the first sketch to the day you get the keys.</p>
       <div class="hero-actions">
         <a class="btn btn-orange wa-link" href="#">
