@@ -616,16 +616,31 @@
   moreBtn.addEventListener("click", () => { expanded = true; applyFilter(); });
   applyFilter();
 
-  // enquiry form — preview: checks fields; live site will email info@madstudio.design
-  document.getElementById("enquiry").addEventListener("submit", e => {
+  // enquiry form — sends to info@madstudio.design via FormSubmit
+  const ENQUIRY_TO = "info@madstudio.design";
+  document.getElementById("enquiry").addEventListener("submit", async e => {
     e.preventDefault();
-    const f = e.target, msg = f.querySelector(".form-msg");
-    if (!f.name.value.trim() || !f.phone.value.trim()) {
+    const f = e.target, msg = f.querySelector(".form-msg"), btn = f.querySelector('button[type="submit"]');
+    const val = n => (f.elements.namedItem(n) || {}).value?.trim() || "";
+    if (!val("name") || !val("phone")) {
       msg.textContent = "Add your name and a phone number so we can reach you.";
-      (f.name.value.trim() ? f.phone : f.name).focus();
+      f.elements.namedItem(val("name") ? "phone" : "name").focus();
       return;
     }
-    msg.textContent = "Preview only: on the live site this enquiry goes straight to info@madstudio.design.";
+    const data = { name: val("name"), phone: val("phone"), email: val("email"), project_type: val("type"), service: val("service"),
+      location: val("location"), budget: val("budget"), message: val("message"),
+      _subject: "New website enquiry — " + val("name"), _template: "table", _captcha: "false" };
+    btn.disabled = true; btn.textContent = "Sending…"; msg.textContent = "";
+    try {
+      const r = await fetch("https://formsubmit.co/ajax/" + ENQUIRY_TO, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(data) });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || j.success === "false" || j.success === false) throw new Error(j.message || "Send failed");
+      f.reset(); btn.textContent = "Enquiry sent";
+      msg.textContent = "Thank you. We'll call you within one working day to arrange a consultation.";
+    } catch (err) {
+      btn.disabled = false; btn.textContent = "Send enquiry";
+      msg.textContent = "Your enquiry didn't send. Please try again, or message us on WhatsApp at +971 58 247 1273.";
+    }
   });
 </script>
 </body>
