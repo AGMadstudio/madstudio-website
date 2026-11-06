@@ -70,6 +70,9 @@
   .hero-cover img{width:100%;height:100%;object-fit:cover;object-position:50% 62%}
   .hero-cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(0,0,0,.55) 70%,rgba(0,0,0,.9) 100%),linear-gradient(90deg,rgba(0,0,0,.35) 0%,rgba(0,0,0,0) 55%)}
   .hero .wrap{position:relative;z-index:1;width:100%}
+  .award{position:absolute;top:0;right:var(--gutter);z-index:2;width:clamp(78px,8vw,128px);display:block;filter:drop-shadow(0 10px 24px rgba(0,0,0,.45))}
+  .award img{width:100%;height:auto}
+  @media (max-width:700px){.award{width:62px;right:16px}}
   .hero .display{text-shadow:0 2px 30px rgba(0,0,0,.35)}
   .hero .lede{color:var(--white)}
   .hero .quote{font-variation-settings:"wdth" 100;font-weight:700;font-size:clamp(40px,6.2vw,92px);line-height:1.02;letter-spacing:-.015em;max-width:12em}
@@ -261,6 +264,7 @@
 
 <main id="top">
   <div class="hero">
+    <a class="award" href="#studio" aria-label="Award winner, Dubai Property Awards 2026–2027, Residential Interior Private Residence Dubai, Atelier de Marrakech by MAD Studio"><img src="img/DU_2026_INT_12.png" alt="" width="591" height="2469"></a>
     <div class="hero-cover"><img src="cover.jpg" alt="Formal living room behind black-framed glass doors, with a coffered lit ceiling and marble feature wall" fetchpriority="high"></div>
     <div class="wrap">
       <h1 class="display quote">Originality consists of returning to the origin.</h1>
