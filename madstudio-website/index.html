@@ -65,10 +65,17 @@
   }
 
   /* hero */
-  .hero{padding:clamp(56px,9vw,120px) 0 0}
+  .hero{position:relative;min-height:calc(100svh - 72px);display:flex;align-items:flex-end;padding:clamp(96px,14vh,160px) 0 clamp(36px,6vh,64px);overflow:hidden}
+  .hero-cover{position:absolute;inset:0;z-index:0}
+  .hero-cover img{width:100%;height:100%;object-fit:cover;object-position:50% 62%}
+  .hero-cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(0,0,0,.55) 70%,rgba(0,0,0,.9) 100%),linear-gradient(90deg,rgba(0,0,0,.35) 0%,rgba(0,0,0,0) 55%)}
+  .hero .wrap{position:relative;z-index:1;width:100%}
+  .hero .display{text-shadow:0 2px 30px rgba(0,0,0,.35)}
+  .hero .lede{color:var(--white)}
+  @media (max-width:700px){.br-d{display:none}}
   .hero .lede{margin-top:32px}
   .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:40px}
-  .datum{position:relative;margin-top:clamp(56px,8vw,96px);height:1px;background:var(--orange)}
+  .datum{position:relative;margin-top:clamp(44px,7vh,80px);height:1px;background:var(--orange)}
   .datum::before,.datum::after{content:"";position:absolute;top:-9px;width:1px;height:19px;background:var(--orange)}
   .datum::before{left:0}.datum::after{right:0}
   .datum span{position:absolute;right:0;top:-30px;font-size:13px;color:var(--orange);font-variation-settings:var(--cond)}
@@ -250,8 +257,9 @@
 
 <main id="top">
   <div class="hero">
+    <div class="hero-cover"><img src="cover.jpg" alt="Formal living room behind black-framed glass doors, with a coffered lit ceiling and marble feature wall" fetchpriority="high"></div>
     <div class="wrap">
-      <h1 class="display">Designed and built<br>in Dubai.</h1>
+      <h1 class="display">Designed and built<br class="br-d"> in Dubai.</h1>
       <p class="lede">Architecture, interiors and landscape from one studio. We take your project from the first sketch to the day you get the keys.</p>
       <div class="hero-actions">
         <a class="btn btn-orange wa-link" href="#">
@@ -261,9 +269,6 @@
         <a class="btn" href="#contact">Book a consultation</a>
       </div>
       <div class="datum" aria-hidden="true"><b>FFL ±0.00</b><span>Dubai, since 2020</span></div>
-    </div>
-    <div class="wrap" style="padding-top:0">
-      <div class="ph hero-img"><img src="img/hero-1.jpg" alt="Living and dining room, Khawaneej Villa, Dubai" fetchpriority="high"></div>
     </div>
   </div>
 
